@@ -1,0 +1,32 @@
+.dart_tool/
+build/
+.packages
+.pub-cache/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Android
+.gradle/
+local.properties
+**/android/**/generated/
+
+# iOS/macOS
+Pods/
+DerivedData/
+*.moved-aside
+*.xcuserstate
+
+# Desktop
+linux/flutter/ephemeral/
+macos/flutter/ephemeral/
+windows/flutter/ephemeral/
+
+.dart_tool/
+build/
+ios/Pods/
+macos/flutter/ephemeral/
+windows/flutter/ephemeral/
+.packages
+.pub-cache/
+*.iml
+.idea/
