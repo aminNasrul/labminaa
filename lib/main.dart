@@ -4,26 +4,35 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+ 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
 
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Lab',
-      theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
-      ),
-      home: const FirstPage(),
-      /*secondPage: const SecondPage(),*/
+      home: MainPageExt(),
     );
   }
 }
-class FirstPage extends StatelessWidget {
-  const FirstPage({super.key});
+class MainPageExt extends StatefulWidget {
+  const MainPageExt({super.key});
 
+  @override
+  State<MainPageExt> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPageExt> {
+String buttonName = 'Click';
+  int currentIndex = 0;
+  bool _isClicked = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,28 +42,90 @@ class FirstPage extends StatelessWidget {
           title: const Text('My App'),
         ),
         body: Center(
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.lightBlueAccent,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context){
-                    return SecondPage();
-                  },
+          child: currentIndex == 0 ? Container(
+            height: double.infinity,
+            width: double.infinity,
+            color: const Color.fromARGB(255, 137, 190, 152),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 172, 153, 206),
+                    foregroundColor: Color.fromARGB(255, 255, 255, 255)
+                  ),
+                  onPressed: () {
+                    setState(() {
+                       buttonName = 'Whoops';
+                    });  
+                  }, 
+                  child: Text(buttonName),
                 ),
-              );
-            },
-            child: Text('Click'),
-          ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context)=>
+                          NextPage(),
+                      ),
+                    );
+                  }, 
+                  child: const Text('Next Page'),
+                ),
+              ],  
+            ),
+          ) 
+            : GestureDetector(
+                onTap: (){
+                  setState(() {
+                  _isClicked = !_isClicked;
+                });
+              },
+              child: _isClicked ? Image.asset(
+                'images/download.jpg'
+                ) : Image.asset('images/try1.jpg'),
+              ),
+        ),
+
+        bottomNavigationBar: BottomNavigationBar(
+          /*backgroundColor: Color.fromARGB(0, 255, 255, 255),*/
+          items: const [
+            BottomNavigationBarItem(
+              label: 'Home',
+              icon: Icon(
+                Icons.home, 
+                /*color: Color.fromARGB(255, 0, 123, 255)*/
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: 'Profile',
+              icon: Icon(
+                Icons.account_circle,
+                /*color: Color.fromARGB(255, 0, 123, 255),*/
+              ),
+            ),
+             BottomNavigationBarItem(
+              label: 'Menu',
+              icon: Icon(
+                Icons.menu,
+                /*color: Color.fromARGB(255, 0, 123, 255),*/
+              ),
+            ),
+          ],
+          currentIndex: currentIndex,
+          onTap: (int index){
+            setState(() {
+              currentIndex = index;
+            });
+          },
         ),
       );
   }
 }
 
-class SecondPage extends StatelessWidget {
-  const SecondPage ({super.key});
+class NextPage extends StatelessWidget {
+  const NextPage({super.key});
 
   @override
   Widget build(BuildContext context) {
