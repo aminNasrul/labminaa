@@ -4,88 +4,62 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  String buttonName = 'Click';
-  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
 
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      title: 'Flutter Lab',
+      theme: ThemeData(
+        primarySwatch: Colors.lightBlue,
+      ),
+      home: const FirstPage(),
+      /*secondPage: const SecondPage(),*/
+    );
+  }
+}
+class FirstPage extends StatelessWidget {
+  const FirstPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
         appBar: AppBar(
           foregroundColor: Color.fromARGB(255, 249, 249, 249),
           backgroundColor: Color.fromARGB(255, 90, 155, 219),
           title: const Text('My App'),
         ),
         body: Center(
-          child: SizedBox(
-            height: double.infinity,
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 172, 153, 206),
-                    foregroundColor: Color.fromARGB(255, 255, 255, 255)
-                  ),
-                  onPressed: () {
-                    setState(() {
-                       buttonName = 'Whoops';
-                    });  
-                  }, 
-                  child: Text(buttonName),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                       buttonName = 'Whoops';
-                    });  
-                  }, 
-                  child: Text(buttonName),
-                ),
-              ],
-              
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.lightBlueAccent,
             ),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (BuildContext context){
+                    return SecondPage();
+                  },
+                ),
+              );
+            },
+            child: Text('Click'),
           ),
         ),
+      );
+  }
+}
 
-        bottomNavigationBar: BottomNavigationBar(
-          /*backgroundColor: Color.fromARGB(0, 255, 255, 255),*/
-          items: const [
-            BottomNavigationBarItem(
-              label: 'Home',
-              icon: Icon(
-                Icons.home, 
-                /*color: Color.fromARGB(255, 0, 123, 255)*/
-              ),
-            ),
-            BottomNavigationBarItem(
-              label: 'Profile',
-              icon: Icon(
-                Icons.account_circle,
-                /*color: Color.fromARGB(255, 0, 123, 255),*/
-              ),
-            ),
-          ],
-          currentIndex: currentIndex,
-          onTap: (int index){
-            setState(() {
-              currentIndex = index;
-            });
-          },
-        ),
-      ),
+class SecondPage extends StatelessWidget {
+  const SecondPage ({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
     );
   }
 }
